@@ -1,4 +1,6 @@
 #include <iostream>
+#include <cstdlib>
+#include <ctime>
 using namespace std;
 
 class Game {
@@ -21,13 +23,14 @@ class Game {
         // Game function prototypes 
 
         int setbalance();
-        void roll();
-        // void display();
-        // void again();
+        int roll();
+        int display();
+        void again();
 
 };
 
 //Game member function implementation
+
 
 int Game::setbalance(){
     int balance;
@@ -44,20 +47,47 @@ int Game::setbalance(){
     return balance;
 }
 
-void Game::roll(){
-    
+int Game::display(){
+
     int balance = setbalance();
-    cout << "Current Balance: " << balance << endl;
-    cout << "Rolling..." << endl;
-    
+    int rolledVal = roll();
+
+    if(rolledVal % 2 == 0){
+        cout << "Even number" << endl;
+    } else {
+        balance = balance - 1;
+        cout << "Odd" << endl;
+    }  
+    cout << "Current Balance is: " << balance << endl;
+
+    return balance;
 }
 
+int Game::roll(){
+
+    srand(time(0));
+    int rolledVal =  1 + (rand() % 6);
+    
+    cout << "Rolling..." << endl;
+
+    cout << rolledVal << endl;
+
+    return rolledVal;
+}
+
+void Game::again(){
+
+}
 
 int main(){
 
+    int balance;
+
     Game m;
-    
-    m.roll();
+
+    balance = m.display();
+
+    cout << balance << endl;
 
     return 0;
 }
