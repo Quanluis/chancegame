@@ -8,16 +8,12 @@ class Game {
         int balance, rolledVal;
         char rollagain;
 
-    // Game function prototypes 
-
-    // void validateBalance();
-    // void validateAgain();
-
     public: 
 
         // Constructor
         Game(){
             cout << "Running Game..." << endl;
+            again();
         }
 
         // Game function prototypes 
@@ -31,15 +27,14 @@ class Game {
 
 //Game member function implementation
 
-
 int Game::setbalance(){
     int balance;
 
-    cout << "Enter balance, min of $1" << endl;
+    cout << "Enter your starting balance (minimum of $1) :" << endl;
     cin >> balance;
 
     while(balance <= 0){
-        cout << "Try again: ";
+        cout << "Invalid amount entered, try again:";
         cin.clear();
         cin.ignore(1200, '\n');
         cin >> balance;
@@ -50,15 +45,20 @@ int Game::setbalance(){
 int Game::display(){
 
     int balance = setbalance();
+
+    cout << "Balance = $" << balance << endl;
+
     int rolledVal = roll();
 
     if(rolledVal % 2 == 0){
         cout << "Even number" << endl;
+        cout << "You win $1" << endl;
+        balance = balance + 1;
     } else {
         balance = balance - 1;
         cout << "Odd" << endl;
     }  
-    cout << "Current Balance is: " << balance << endl;
+    cout << "Current Balance is: $" << balance << endl;
 
     return balance;
 }
@@ -77,17 +77,44 @@ int Game::roll(){
 
 void Game::again(){
 
+    char answer;
+
+    int balance = display();
+
+    while(balance > 0){
+        cout << "Roll again?";
+        cin >> answer;
+
+        if(answer == 'Y' || answer == 'y'){
+            cout << "Game running" << endl;
+            int rolledVal = roll();
+
+        if(rolledVal % 2 == 0){
+        cout << "Even number" << endl;
+        cout << "You win $1" << endl;
+        balance = balance + 1;
+        } else {
+        balance = balance - 1;
+        cout << "Odd" << endl;
+        }  
+        cout << "Current Balance is: $" << balance << endl;
+
+        } else if(answer == 'N' || answer == 'n'){
+            break;
+        } else {
+            cout << "Invalid answer try again (y = yes, n = no)";
+            cin.clear();
+            cin.ignore(1200, '\n');
+            cin >> answer;
+            continue;
+        }
+    } 
+    cout << "Game over. Ending Balance = $" << balance;
 }
 
 int main(){
 
-    int balance;
-
     Game m;
-
-    balance = m.display();
-
-    cout << balance << endl;
 
     return 0;
 }
